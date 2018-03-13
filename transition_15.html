@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/tween.js@16.3.4"></script>
+    <style>
+
+
+    </style>
+</head>
+
+<body>
+    <div id="transition-demo">
+        <input type="number" v-model.number="number" step="20">
+        <p>{{animateNumber}}</p>
+    </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script type="text/javascript">
+    new Vue({
+        el:'#transition-demo',
+        data:{
+            number:0,
+            animateNumber:0
+        },
+        watch:{
+            number:function(newValue,oldValue){
+                var vm=this;
+                new TWEEN.Tween({tweeningNumber:oldValue}).to({tweeningNumber:newValue},500)
+                    .easing(TWEEN.Easing.Quadratic.Out)
+                    .onUpdate(function () {
+                        vm.animateNumber=this.tweeningNumber.toFixed(0)
+                    }
+                    ).start()
+                function animate(){
+                    if(TWEEN.update()){
+                        requestAnimationFrame(animate);
+                    }
+                }
+                animate();
+            }
+
+        }
+
+
+    })
+
+
+</script>
+</html>
